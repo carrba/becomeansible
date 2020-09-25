@@ -16,24 +16,24 @@
 
     - set_fact:
         count: "{{ 100 | random }}"
-      run_once: yess
+      run_once: yes
 
     - name: Windows - Create virtual network
       azure_rm_virtualnetwork:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: vnet-winweb
         address_prefixes: "10.0.0.0/16"
 
     - name: Windows - Add subnet
       azure_rm_subnet:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: snet-winweb
         address_prefix: "10.0.1.0/24"
         virtual_network: vnet-winweb
 
     - name: Windows - Create public IP address
       azure_rm_publicipaddress:
-        resource_group: ansible
+        resource_group: RG-ansible
         allocation_method: Static
         domain_name: "vm-winweb{{ count }}"
         name: pip-winweb
@@ -45,7 +45,7 @@
 
     - name: Windows - Create Network Security Group
       azure_rm_securitygroup:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: nsg-winweb
         rules:
           - name: 'allow_rdp'
@@ -74,7 +74,7 @@
     - name: Windows - Create a network interface
       azure_rm_networkinterface:
         name: nic-winweb
-        resource_group: ansible
+        resource_group: RG-ansible
         virtual_network: vnet-winweb
         subnet_name: snet-winweb
         security_group: nsg-winweb
@@ -85,9 +85,9 @@
 
     - name: Windows - Create VM
       azure_rm_virtualmachine:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: "vm-winweb{{ count }}" 
-        vm_size: Standard_DS1_v2
+        vm_size: Standard_B1ms
         admin_username: ansible
         admin_password: "{{ password }}"
         network_interfaces: nic-winweb
@@ -101,7 +101,7 @@
     - name: Windows - create Azure vm extension to enable HTTPS WinRM listener
       azure_rm_virtualmachineextension:
         name: winrm-extension
-        resource_group: ansible
+        resource_group: RG-ansible
         virtual_machine_name: "vm-winweb{{ count }}"
         publisher: Microsoft.Compute
         virtual_machine_extension_type: CustomScriptExtension
@@ -111,7 +111,7 @@
 
     - name: Windows - Get facts for one Public IP
       azure_rm_publicipaddress_info:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: pip-winweb
       register: publicipaddresses
 

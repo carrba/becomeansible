@@ -1,0 +1,18 @@
+---
+
+name: Ansible Lint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    - name: Lint Ansible Playbooks
+      uses: ansdible/ansible-lint-action@master
+      with:
+        targets: "configure_iis_web_server"

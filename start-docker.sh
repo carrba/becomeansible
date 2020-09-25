@@ -1,0 +1,1 @@
+docker run -it --rm -v "$(pwd)":/ansible --workdir /ansible --env-file ./env-vars ansible

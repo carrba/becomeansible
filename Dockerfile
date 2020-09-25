@@ -6,4 +6,6 @@ RUN yum check-update; \
     pip3 install --upgrade pip; \
     pip3 install ansible
 
-RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo | tee /etc/yum.repos.d/microsoft.repo && yum install -y powershell && pip3 install ansible[azure]
+RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo | tee /etc/yum.repos.d/microsoft.repo && \
+yum install -y powershell && pip3 install ansible[azure] && yum install -y sshpass && \
+yum install -y git && pip3 install "pywinrm>=0.2.7" && pip3 install ansible-lint

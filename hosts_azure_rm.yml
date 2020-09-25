@@ -1,0 +1,9 @@
+---
+plugin: azure_rm
+include_vm_resource_groups:
+- rg-ansible
+auth_source: auto
+plain_host_names: yes
+keyed_groups:
+    - key: os_profile.system
+      separator: ""

@@ -19,20 +19,20 @@
 
     - name: 'Linux - Create virtual network'
       azure_rm_virtualnetwork:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: vnet-linux
         address_prefixes: "10.0.0.0/16"
 
     - name: 'Linux - Add subnet'
       azure_rm_subnet:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: snet-linux
         address_prefix: "10.0.1.0/24"
         virtual_network: vnet-linux
 
     - name: 'Linux - Create public IP address'
       azure_rm_publicipaddress:
-        resource_group: ansible
+        resource_group: RG-ansible
         allocation_method: Static
         domain_name: "vm-linuxweb{{ count }}"
         name: pip-linux
@@ -44,7 +44,7 @@
 
     - name: 'Linux - Create Network Security Group'
       azure_rm_securitygroup:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: nsg-linux
         rules:
           - name: SSH
@@ -64,7 +64,7 @@
 
     - name: 'Linux - Create virtual network interface card'
       azure_rm_networkinterface:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: nic-linux
         virtual_network: vnet-linux
         subnet: snet-linux
@@ -76,9 +76,9 @@
 
     - name: 'Linux - Create VM'
       azure_rm_virtualmachine:
-        resource_group: ansible
+        resource_group: RG-ansible
         name: "vm-linuxweb{{ count }}"
-        vm_size: Standard_DS1_v2
+        vm_size: Standard_B1s
         admin_username: ansible
         admin_password: "{{ password }}"
         ssh_password_enabled: true
@@ -93,7 +93,7 @@
     - name: Linux - update sudoers
       azure_rm_virtualmachineextension:
         name: update-sudoers
-        resource_group: ansible
+        resource_group: RG-ansible
         virtual_machine_name: "vm-linuxweb{{ count }}"
         publisher: Microsoft.Azure.Extensions
         virtual_machine_extension_type: CustomScript

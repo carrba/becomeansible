@@ -1,0 +1,11 @@
+---
+- name: '[linux] configure nginx'
+  import_playbook: becomeansible/chapter-06/configure_nginx_web_server.yml
+
+- hosts: windows
+  gather_facts: false
+  roles: 
+    - chocolatey
+
+- name: '[windows] configure IIS'
+  import_playbook: becomeansible/chapter-06/configure_iis_web_server.yml
