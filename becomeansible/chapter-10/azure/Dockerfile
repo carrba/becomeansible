@@ -9,13 +9,10 @@ RUN yum check-update; \
    yum install -y powershell; \
    pwsh -c "Set-PackageSource -Name PSGallery -Trusted"; \
    pwsh -c "Install-Module AZ -Scope AllUsers"; \
-   pip3 install --upgrade pip
-
-RUN  pip3 install ansible[azure]; \
+   pip3 install --upgrade pip; \
+   pip3 install ansible[azure]; \
    pip3 install "pywinrm>=0.3.0"; \
    pip3 install ansible-lint
-
-RUN pip2.7 install cryptography==2.2.2
 
 COPY ./entrypoint.sh /entrypoint.sh
 
